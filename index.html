@@ -1,74 +1,162 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
   <title>Çeliksan Pompa Arıza Tespit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
+    :root {
+      --accent: #e63946;
+      --accent-dark: #c1121f;
+      --accent-glow: rgba(230, 57, 70, 0.3);
+      --soft: #fff5f6;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6c757d;
+      --border: rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+      --gradient-1: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 10px;
-      background: #fff;
-      border-bottom: 3px solid #b30000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--gradient-1);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-lg);
     }
 
-    .logo-left img, .logo-right img {
-      height: 100px;
-      border-radius: 10px;
-      background: #fff;
-      padding: 4px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-container img {
+      height: 90px;
+      border-radius: 12px;
+      background: white;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .title-section {
+      flex: 1;
       text-align: center;
-      flex-grow: 1;
     }
 
     .title-section h1 {
-      font-size: 2rem;
-      color: #b30000;
-      margin: 0;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 4px;
     }
 
     .title-section h2 {
-      font-size: 1.2rem;
-      color: #444;
-      margin: 8px 0 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
       padding: 0 1.5rem;
     }
 
     .card {
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 32px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
       transition: all 0.6s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card.anim-out {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .card.anim-in {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    .card.visible.anim-in-active {
+      animation: fadeSlideIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card h3 {
       text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      position: relative;
+      padding-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .card h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--underline-width, 80px);
+      height: 3px;
+      background: var(--gradient-1);
+      transition: width 0.3s ease;
     }
 
     .hidden {
@@ -84,109 +172,135 @@
       transform: translateY(0);
     }
 
-    .back-link {
-      font-size: 0.9rem;
-      color: #555;
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 10px;
-      display: inline-block;
-    }
-
-    .reset-link {
-        font-size: 0.9rem;
-        color: #555;
-        text-decoration: underline;
-        cursor: pointer;
-        margin-top: 4px;
+    .answers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
     }
 
     .answer-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #b30000, #e60000);
-  color: #fff;
-  font-size: 1rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  font-weight: 600;
-}
-
-.answer-btn:hover {
-  background: linear-gradient(135deg, #990000, #cc0000);
-  transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-}
-
-.answer-btn span {
-  font-size: 1.2rem;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  transition: all 0.6s ease;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card.anim-out {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.card.anim-in {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.card.visible.anim-in-active {
-  animation: fadeSlideIn 0.5s ease forwards;
-}
-
-@keyframes fadeSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-      padding: 10px 15px;
-      background: #b30000;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: var(--gradient-1);
       color: #fff;
-      font-size: 1rem;
+      font-size: 1.15rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background 0.3s ease;
-      margin-right: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px var(--accent-glow);
+      font-weight: 600;
+      font-family: inherit;
     }
 
     .answer-btn:hover {
-      background: #990000;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 16px var(--accent-glow);
     }
 
-    @media (max-width: 700px) {
-      .logo-left img, .logo-right img {
+    .answer-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .answer-btn span {
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid var(--border);
+    }
+
+    .back-link, .reset-link {
+      font-size: 1.05rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      padding: 8px 16px;
+      background: var(--soft);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .back-link:hover, .reset-link:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateX(5px);
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    footer {
+      background: var(--gradient-1);
+      color: white;
+      padding: 32px 24px;
+      margin-top: 200px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+
+    .footer-section h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .footer-section p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 32px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (max-width: 768px) {
+      .logo-container img {
         height: 70px;
       }
+
       .title-section h1 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
+
       .title-section h2 {
-        font-size: 1rem;
+        font-size: 0.85rem;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+      }
+
+      .answer-btn {
+        padding: 12px 24px;
+        font-size: 0.95rem;
       }
     }
   </style>
@@ -194,15 +308,17 @@
 <body>
 
   <header>
-    <div class="logo-left">
-      <img src="https://s.ankara.bel.tr/files/2022/11/24/6e7ea7997a234e3b8089fd0779c5e1e6.jpeg" alt="ABB" />
-    </div>
-    <div class="title-section">
-      <h1>ANKARA İTFAİYESİ</h1>
-      <h2>ÇELİKSAN POMPA ARIZA TESPİT</h2>
-    </div>
-    <div class="logo-right">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Emblem_of_Turkish_Firefighters.svg/640px-Emblem_of_Turkish_Firefighters.svg.png" alt="İTFAİYE" />
+    <div class="header-content">
+      <div class="logo-container">
+        <img src="https://s.ankara.bel.tr/files/2022/11/24/6e7ea7997a234e3b8089fd0779c5e1e6.jpeg" alt="Ankara Belediyesi">
+      </div>
+      <div class="title-section">
+        <h1>ANKARA İTFAİYESİ</h1>
+        <h2>ÇELİKSAN POMPA ARIZA TESPİT</h2>
+      </div>
+      <div class="logo-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Emblem_of_Turkish_Firefighters.svg/640px-Emblem_of_Turkish_Firefighters.svg.png" alt="İtfaiye">
+      </div>
     </div>
   </header>
 
@@ -211,20 +327,20 @@
     <div id="step1" class="card visible">
       <h3>Pompa su veriyor mu?</h3>
       <div class="answers">
-        <button class="answer-btn" onclick="goToStep('step2', 'step1')">Evet</span>
-        <button class="answer-btn" onclick="goToStep('step3', 'step1')">Hayır</span>
+        <button class="answer-btn" onclick="goToStep('step2', 'step1')"><span>✔</span> Evet</button>
+        <button class="answer-btn" onclick="goToStep('step3', 'step1')"><span>✖</span> Hayır</button>
       </div>
     </div>
     
     <div id="step2" class="card hidden">
       <h3>Su basıncı yeterli mi?</h3>
       <div class="answers">
-        <button class="answer-btn" onclick="goToStep('step4', 'step2')">Evet</span>
-        <button class="answer-btn" onclick="goToStep('step5', 'step2')">Hayır</span>
+        <button class="answer-btn" onclick="goToStep('step4', 'step2')"><span>✔</span> Evet</button>
+        <button class="answer-btn" onclick="goToStep('step5', 'step2')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
@@ -234,21 +350,17 @@
         <button class="answer-btn" onclick="goToStep('step5', 'step3')"><span>✔</span> Evet</button>
         <button class="answer-btn" onclick="goToStep('step10', 'step3')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step4" class="card hidden">
       <h3>Harika, her şey yolunda!</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
@@ -258,21 +370,17 @@
         <button class="answer-btn" onclick="goToStep('step8', 'step5')"><span>✔</span> Evet</button>
         <button class="answer-btn" onclick="goToStep('step6', 'step5')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step6" class="card hidden">
       <h3>Ana vana düğmesine basılır.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
@@ -282,34 +390,25 @@
         <button class="answer-btn" onclick="goToStep('step15', 'step7')"><span>✔</span> Evet</button>
         <button class="answer-btn" onclick="goToStep('step9', 'step7')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step8" class="card hidden">
-      <h3>Gaz + düğmesi ile motor devrini yükseltelim.
-Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <h3>Gaz + düğmesi ile motor devrini yükseltelim. Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step9" class="card hidden">
       <h3>Ana vana düğmesine basılır.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
@@ -319,9 +418,9 @@ Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
         <button class="answer-btn" onclick="goToStep('step11', 'step10')"><span>✔</span> Evet</button>
         <button class="answer-btn" onclick="goToStep('step14', 'step10')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
@@ -331,64 +430,101 @@ Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
         <button class="answer-btn" onclick="goToStep('step12', 'step11')"><span>✔</span> Evet</button>
         <button class="answer-btn" onclick="goToStep('step13', 'step11')"><span>✖</span> Hayır</button>
       </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step12" class="card hidden">
       <h3>Araç içerisinden pompa devreye alınmalıdır.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step13" class="card hidden">
       <h3>PTO devreye girmesi için vites boşa alınıp (N) el freni (imdat) çekilmelidir.</h3>
-      <div class="answers">
-        
-        
-     </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step14" class="card hidden">
       <h3>Araç içerisindeki pano üzerinden sistem tuşu aktif edilir.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
     <div id="step15" class="card hidden">
       <h3>Su tankının dolu olduğundan emin olalım.</h3>
-      <div class="answers">
-        
-        
-      </div>
-      <div class="nav-links" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="nav-links">
         <span class="back-link" onclick="goBack()">← Geri</span>
-        <span class="reset-link" onclick="goToStart()">Başa Dön</span>
+        <span class="reset-link" onclick="goToStart()">🔄 Başa Dön</span>
       </div>
     </div>
     
   </main>
 
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>📞 İletişim</h3>
+        <p>Ankara Büyükşehir Belediyesi<br>İtfaiye Dairesi Başkanlığı<br>+90 312 507 4800<br>Acil: 112</p>
+      </div>
+      <div class="footer-section">
+        <h3>🚒 Araç Bilgisi</h3>
+        <p>2023 Çift Kabin İveco<br>Çeliksan Pompa Sistemi<br>Su Kapasitesi: 4.000 Litre</p>
+      </div>
+      <div class="footer-section">
+        <h3>⚠️ Önemli Not</h3>
+        <p>Bu arıza tespit sistemi sadece<br>bilgi amaçlıdır. Araçta arıza olması <br>durumunda Bakım Onarım ile<br>iletişime geçiniz.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Ankara Büyükşehir Belediyesi İtfaiye Dairesi Başkanlığı
+    </div>
+  </footer>
+
   <script>
   let historyStack = [];
+
+  // Her h3 başlığının altındaki çizgiyi metin genişliğine göre ayarla
+  function adjustUnderlines() {
+    const headers = document.querySelectorAll('.card h3');
+    headers.forEach(header => {
+      // Başlığın maksimum genişliğini al (container genişliği)
+      const maxWidth = header.offsetWidth;
+      
+      // Geçici bir span oluştur ve metin genişliğini ölç
+      const temp = document.createElement('span');
+      temp.style.visibility = 'hidden';
+      temp.style.position = 'absolute';
+      temp.style.fontSize = window.getComputedStyle(header).fontSize;
+      temp.style.fontWeight = window.getComputedStyle(header).fontWeight;
+      temp.style.fontFamily = window.getComputedStyle(header).fontFamily;
+      temp.style.whiteSpace = 'nowrap';
+      temp.textContent = header.textContent;
+      document.body.appendChild(temp);
+      
+      let textWidth = temp.offsetWidth;
+      document.body.removeChild(temp);
+      
+      // Eğer metin genişliği container'dan büyükse, container genişliğini kullan
+      textWidth = Math.min(textWidth, maxWidth - 40); // 40px padding için
+      
+      // Çizginin genişliğini ayarla
+      header.style.setProperty('--underline-width', textWidth + 'px');
+    });
+  }
+
+  // Sayfa yüklendiğinde ve her adım değişiminde çizgileri ayarla
+  window.addEventListener('load', adjustUnderlines);
+  window.addEventListener('resize', adjustUnderlines);
 
   function goToStep(showId, hideId) {
     if (!showId) return;
@@ -406,6 +542,7 @@ Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
 
     setTimeout(() => {
       showCard.classList.remove("anim-in", "anim-in-active");
+      adjustUnderlines(); // Yeni kartın çizgisini ayarla
     }, 500);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -422,6 +559,7 @@ Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
     const prevCard = document.getElementById(previousId);
     prevCard.classList.remove("hidden");
     prevCard.classList.add("visible");
+    setTimeout(adjustUnderlines, 100); // Çizgiyi ayarla
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -434,10 +572,10 @@ Sorun düzelmediyse su tankının dolu olduğundan emin olalım.</h3>
     firstCard.classList.remove("hidden");
     firstCard.classList.add("visible");
     historyStack = [];
+    setTimeout(adjustUnderlines, 100); // Çizgiyi ayarla
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
-
 
 </body>
 </html>
